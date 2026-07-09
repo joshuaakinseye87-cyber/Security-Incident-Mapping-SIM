@@ -1,0 +1,1423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SIM · Security Incident Mapping</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   SIM — Security Incident Mapping
+   Shared stylesheet
+   ============================================================ */
+
+:root {
+  /* Color tokens */
+  --navy-950: #0b1526;
+  --navy-900: #0f1e35;
+  --blue-800: #123a76;
+  --blue-700: #164a96;
+  --blue-600: #1a5cbf;
+  --blue-500: #2f74e0;
+  --blue-400: #5b93ea;
+  --blue-100: #e6eefb;
+  --blue-50:  #f2f7fd;
+  --ice-50:   #f6f9fc;
+  --white:    #ffffff;
+  --slate-600:#5b6b82;
+  --slate-500:#7688a0;
+  --slate-300:#c4d1e0;
+  --slate-200:#dce5f0;
+  --slate-100:#eef3f9;
+  --line:     #dfe7f1;
+
+  --amber:    #b8790a;
+  --amber-bg: #fdf1dd;
+  --green:    #147a4c;
+  --green-bg: #e2f5eb;
+  --red:      #b8302f;
+  --red-bg:   #fbe8e7;
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+
+  --shadow-sm: 0 1px 2px rgba(15, 30, 53, 0.06);
+  --shadow-md: 0 4px 14px rgba(15, 30, 53, 0.08);
+  --shadow-lg: 0 18px 40px rgba(11, 21, 38, 0.14);
+
+  --font-display: 'Manrope', 'Segoe UI', sans-serif;
+  --font-body: 'Inter', 'Segoe UI', sans-serif;
+}
+
+* { box-sizing: border-box; }
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+body {
+  font-family: var(--font-body);
+  color: var(--navy-900);
+  background: var(--ice-50);
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  color: var(--navy-900);
+  margin: 0;
+}
+p { margin: 0; }
+a { color: inherit; text-decoration: none; }
+button { font-family: var(--font-body); cursor: pointer; }
+:focus-visible {
+  outline: 2px solid var(--blue-500);
+  outline-offset: 2px;
+}
+ul { margin: 0; padding: 0; list-style: none; }
+
+/* ---------- Brand mark ---------- */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.brand-mark {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: linear-gradient(155deg, var(--blue-600), var(--navy-900));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: var(--shadow-sm);
+}
+.brand-mark svg { width: 20px; height: 20px; }
+.brand-name {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.05rem;
+  letter-spacing: 0.01em;
+  line-height: 1.1;
+  color: var(--navy-900);
+}
+.brand-sub {
+  font-size: 0.68rem;
+  color: var(--slate-500);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+/* ============================================================
+   LOGIN PAGE
+   ============================================================ */
+.auth-shell {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+}
+.auth-visual {
+  position: relative;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(91,147,234,0.25), transparent 45%),
+    linear-gradient(160deg, var(--navy-950) 0%, var(--blue-800) 62%, var(--blue-600) 100%);
+  color: var(--white);
+  padding: 56px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+}
+.auth-visual::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.055) 1px, transparent 1px);
+  background-size: 42px 42px;
+  mask-image: radial-gradient(circle at 30% 40%, black, transparent 75%);
+}
+.auth-visual .brand-name, .auth-visual .brand-sub { color: var(--white); }
+.auth-visual .brand-sub { color: rgba(255,255,255,0.65); }
+
+.auth-pins { position: relative; flex: 1; margin: 40px 0; }
+.pin {
+  position: absolute;
+  width: 30px; height: 30px;
+  border-radius: 50% 50% 50% 0;
+  transform: rotate(-45deg);
+  border: 2px solid rgba(255,255,255,0.85);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.25);
+}
+.pin.p1 { top: 10%; left: 12%; background: rgba(184,48,47,0.85); }
+.pin.p2 { top: 45%; left: 55%; background: rgba(184,121,10,0.85); width:24px; height:24px; }
+.pin.p3 { top: 65%; left: 20%; background: rgba(20,122,76,0.85); width:22px; height:22px; }
+.pin.p4 { top: 20%; left: 72%; background: rgba(184,48,47,0.85); width:20px; height:20px; }
+
+.auth-quote {
+  position: relative;
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1.35;
+  max-width: 420px;
+}
+.auth-quote span { color: rgba(255,255,255,0.6); font-weight: 500; font-size: 1rem; display:block; margin-top: 14px; }
+
+.auth-panel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  background: var(--white);
+}
+.auth-card { width: 100%; max-width: 380px; }
+.auth-card .brand { margin-bottom: 36px; }
+.auth-card h1 { font-size: 1.5rem; margin-bottom: 6px; }
+.auth-card .lead { color: var(--slate-600); font-size: 0.92rem; margin-bottom: 30px; }
+
+.field { margin-bottom: 18px; }
+.field label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--navy-900);
+  margin-bottom: 6px;
+}
+.field input, .field select, .field textarea {
+  width: 100%;
+  padding: 11px 13px;
+  border: 1px solid var(--slate-300);
+  border-radius: var(--radius-sm);
+  font-size: 0.92rem;
+  font-family: var(--font-body);
+  background: var(--white);
+  color: var(--navy-900);
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.field input:focus, .field select:focus, .field textarea:focus {
+  border-color: var(--blue-500);
+  box-shadow: 0 0 0 3px var(--blue-100);
+  outline: none;
+}
+.field textarea { resize: vertical; min-height: 110px; }
+.field .hint { font-size: 0.76rem; color: var(--slate-500); margin-top: 5px; }
+
+.row-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.82rem;
+  margin-bottom: 22px;
+}
+.checkbox-line { display: flex; align-items: center; gap: 7px; color: var(--slate-600); }
+.link { color: var(--blue-600); font-weight: 600; }
+.link:hover { text-decoration: underline; }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 11px 20px;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  font-weight: 700;
+  font-size: 0.88rem;
+  transition: transform 0.08s ease, box-shadow 0.15s, background 0.15s, border-color .15s;
+}
+.btn:active { transform: translateY(1px); }
+.btn-block { width: 100%; }
+.btn-primary { background: var(--blue-600); color: var(--white); box-shadow: var(--shadow-sm); }
+.btn-primary:hover { background: var(--blue-700); }
+.btn-secondary { background: var(--white); color: var(--blue-700); border-color: var(--slate-300); }
+.btn-secondary:hover { border-color: var(--blue-500); color: var(--blue-600); }
+.btn-ghost { background: transparent; color: var(--slate-600); border-color: transparent; }
+.btn-ghost:hover { background: var(--slate-100); color: var(--navy-900); }
+.btn-danger-outline { background: var(--white); color: var(--red); border-color: #f0c6c5; }
+.btn-danger-outline:hover { background: var(--red-bg); }
+.btn-sm { padding: 7px 12px; font-size: 0.78rem; }
+
+.auth-footnote {
+  margin-top: 26px;
+  font-size: 0.76rem;
+  color: var(--slate-500);
+  text-align: center;
+}
+
+/* ============================================================
+   APP SHELL (sidebar + topbar) — used by dashboard/report/map/admin
+   ============================================================ */
+.app-shell { display: grid; grid-template-columns: 250px 1fr; min-height: 100vh; }
+
+.sidebar {
+  background: var(--navy-950);
+  color: var(--white);
+  padding: 24px 18px;
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+}
+.sidebar .brand-name, .sidebar .brand-sub { color: var(--white); }
+.sidebar .brand-sub { color: rgba(255,255,255,0.55); }
+.sidebar .brand { padding: 4px 8px 28px; }
+
+.nav-group { margin-top: 6px; flex: 1; }
+.nav-label {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(255,255,255,0.38);
+  font-weight: 700;
+  padding: 0 10px;
+  margin: 18px 0 8px;
+}
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.72);
+  margin-bottom: 3px;
+}
+.nav-item svg { width: 17px; height: 17px; opacity: 0.85; flex-shrink:0; }
+.nav-item:hover { background: rgba(255,255,255,0.06); color: var(--white); }
+.nav-item.active { background: var(--blue-600); color: var(--white); }
+.nav-item.active svg { opacity: 1; }
+
+.sidebar-foot {
+  border-top: 1px solid rgba(255,255,255,0.1);
+  padding-top: 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.avatar {
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  background: var(--blue-600);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 0.8rem;
+  flex-shrink: 0;
+}
+.sidebar-foot .who { flex: 1; min-width: 0; }
+.sidebar-foot .who .name { font-size: 0.82rem; font-weight: 700; color: var(--white); }
+.sidebar-foot .who .role { font-size: 0.72rem; color: rgba(255,255,255,0.5); }
+.sidebar-foot a.icon-btn { color: rgba(255,255,255,0.6); }
+.sidebar-foot a.icon-btn:hover { color: var(--white); }
+
+.main { padding: 30px 38px 60px; max-width: 1180px; }
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 28px;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.topbar h1 { font-size: 1.5rem; }
+.topbar .eyebrow {
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--blue-600);
+  margin-bottom: 4px;
+}
+.topbar .meta { color: var(--slate-600); font-size: 0.88rem; margin-top: 5px; }
+
+/* ---------- Cards & stats ---------- */
+.card {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin-bottom: 28px;
+}
+.stat-card {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 20px 22px;
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  overflow: hidden;
+}
+.stat-card .icon-badge {
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 14px;
+}
+.stat-card .icon-badge svg { width: 18px; height: 18px; }
+.stat-total .icon-badge { background: var(--blue-100); color: var(--blue-700); }
+.stat-pending .icon-badge { background: var(--amber-bg); color: var(--amber); }
+.stat-resolved .icon-badge { background: var(--green-bg); color: var(--green); }
+.stat-card .num { font-family: var(--font-display); font-size: 2rem; font-weight: 800; line-height: 1; }
+.stat-card .label { color: var(--slate-600); font-size: 0.85rem; margin-top: 6px; font-weight: 600; }
+.stat-card .delta { font-size: 0.76rem; margin-top: 10px; font-weight: 600; }
+.stat-card .delta.up { color: var(--red); }
+.stat-card .delta.down { color: var(--green); }
+.stat-card .delta.flat { color: var(--slate-500); }
+
+.section-title {
+  font-size: 1.02rem;
+  font-weight: 800;
+  margin-bottom: 14px;
+}
+
+.quick-actions {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin-bottom: 32px;
+}
+.action-card {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 22px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: box-shadow .15s, transform .1s, border-color .15s;
+}
+.action-card:hover { box-shadow: var(--shadow-md); border-color: var(--blue-400); transform: translateY(-2px); }
+.action-card .icon-badge {
+  width: 40px; height: 40px;
+  border-radius: 11px;
+  background: var(--blue-50);
+  color: var(--blue-700);
+  display: flex; align-items: center; justify-content: center;
+}
+.action-card .icon-badge svg { width: 20px; height: 20px; }
+.action-card h3 { font-size: 0.98rem; }
+.action-card p { color: var(--slate-600); font-size: 0.84rem; line-height: 1.45; }
+.action-card .go { color: var(--blue-600); font-weight: 700; font-size: 0.82rem; margin-top: auto; }
+
+/* ---------- Tables & lists ---------- */
+.list-card { padding: 22px 24px; }
+.incident-row {
+  display: grid;
+  grid-template-columns: 34px 1.6fr 1fr 0.9fr 0.8fr;
+  align-items: center;
+  gap: 14px;
+  padding: 13px 0;
+  border-top: 1px solid var(--line);
+  font-size: 0.86rem;
+}
+.incident-row:first-of-type { border-top: none; }
+.incident-row.head {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--slate-500);
+  font-weight: 700;
+  padding-bottom: 10px;
+}
+.cat-dot { width: 10px; height: 10px; border-radius: 50%; }
+.dot-theft { background: #b8790a; }
+.dot-robbery { background: #b8302f; }
+.dot-fire { background: #d9531e; }
+.dot-accident { background: #2f74e0; }
+.dot-assault { background: #7c3fb0; }
+
+.incident-title { font-weight: 700; color: var(--navy-900); }
+.incident-sub { color: var(--slate-500); font-size: 0.78rem; margin-top: 2px; }
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.74rem;
+  font-weight: 700;
+}
+.badge::before { content: ""; width: 6px; height: 6px; border-radius: 50%; }
+.badge-pending { background: var(--amber-bg); color: var(--amber); }
+.badge-pending::before { background: var(--amber); }
+.badge-progress { background: var(--blue-100); color: var(--blue-700); }
+.badge-progress::before { background: var(--blue-600); }
+.badge-resolved { background: var(--green-bg); color: var(--green); }
+.badge-resolved::before { background: var(--green); }
+.badge-verified { background: var(--slate-100); color: var(--slate-600); }
+.badge-verified::before { background: var(--slate-500); }
+
+/* ============================================================
+   FORM PAGE (report incident)
+   ============================================================ */
+.form-layout {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 24px;
+  align-items: start;
+}
+.form-card { padding: 28px 30px; }
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 4px;
+}
+.category-option { position: relative; }
+.category-option input { position: absolute; opacity: 0; inset: 0; cursor: pointer; }
+.category-option .card-face {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 12px 13px;
+  border: 1.5px solid var(--slate-200);
+  border-radius: var(--radius-sm);
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--navy-900);
+  transition: border-color .15s, background .15s;
+}
+.category-option .card-face svg { width: 18px; height: 18px; color: var(--slate-500); }
+.category-option input:checked + .card-face {
+  border-color: var(--blue-500);
+  background: var(--blue-50);
+}
+.category-option input:checked + .card-face svg { color: var(--blue-600); }
+.category-option input:focus-visible + .card-face { outline: 2px solid var(--blue-500); outline-offset: 2px; }
+
+.upload-box {
+  border: 1.5px dashed var(--slate-300);
+  border-radius: var(--radius-md);
+  padding: 26px 18px;
+  text-align: center;
+  color: var(--slate-500);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: border-color .15s, background .15s;
+}
+.upload-box:hover { border-color: var(--blue-500); background: var(--blue-50); }
+.upload-box svg { width: 26px; height: 26px; margin-bottom: 8px; color: var(--slate-400); }
+.upload-box strong { color: var(--blue-600); }
+
+.tip-card { padding: 22px; }
+.tip-card h3 { font-size: 0.92rem; margin-bottom: 10px; }
+.tip-list li {
+  display: flex;
+  gap: 10px;
+  font-size: 0.83rem;
+  color: var(--slate-600);
+  line-height: 1.5;
+  margin-bottom: 12px;
+}
+.tip-list li svg { width: 16px; height: 16px; color: var(--blue-600); flex-shrink: 0; margin-top: 2px; }
+.tip-card .divider { height: 1px; background: var(--line); margin: 18px 0; }
+.emergency-box {
+  background: var(--red-bg);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  font-size: 0.82rem;
+  color: var(--red);
+}
+.emergency-box strong { display: block; margin-bottom: 4px; font-size: 0.85rem; }
+
+.form-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 22px; }
+
+/* ============================================================
+   MAP PAGE
+   ============================================================ */
+.map-layout { display: grid; grid-template-columns: 1fr 340px; gap: 22px; align-items: start; }
+
+.search-bar {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+.search-input {
+  flex: 1;
+  min-width: 220px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  background: var(--white);
+  border: 1px solid var(--slate-300);
+  border-radius: var(--radius-sm);
+  padding: 10px 13px;
+}
+.search-input svg { width: 16px; height: 16px; color: var(--slate-500); flex-shrink: 0; }
+.search-input input { border: none; outline: none; font-size: 0.88rem; width: 100%; font-family: var(--font-body); }
+.filter-select {
+  border: 1px solid var(--slate-300);
+  border-radius: var(--radius-sm);
+  padding: 10px 13px;
+  font-size: 0.85rem;
+  background: var(--white);
+  color: var(--navy-900);
+  font-family: var(--font-body);
+}
+
+.map-canvas {
+  position: relative;
+  height: 480px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background:
+    linear-gradient(0deg, rgba(47,116,224,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(47,116,224,0.05) 1px, transparent 1px),
+    linear-gradient(160deg, #eaf1fb 0%, #dbe8f8 100%);
+  background-size: 34px 34px, 34px 34px, cover;
+  box-shadow: var(--shadow-sm);
+}
+.map-block {
+  position: absolute;
+  background: rgba(255,255,255,0.55);
+  border: 1px solid rgba(47,116,224,0.15);
+  border-radius: 4px;
+}
+.map-road {
+  position: absolute;
+  background: rgba(255,255,255,0.9);
+  border: 1px solid var(--slate-200);
+}
+.map-label {
+  position: absolute;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--slate-500);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.map-pin {
+  position: absolute;
+  width: 26px; height: 26px;
+  border-radius: 50% 50% 50% 0;
+  transform: translate(-50%, -100%) rotate(-45deg);
+  border: 2px solid var(--white);
+  box-shadow: 0 4px 10px rgba(11,21,38,0.28);
+  cursor: pointer;
+}
+.map-pin::after {
+  content: "";
+  position: absolute;
+  inset: 5px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.9);
+}
+.map-pin.theft { background: #b8790a; }
+.map-pin.robbery { background: #b8302f; }
+.map-pin.fire { background: #d9531e; }
+.map-pin.accident { background: #2f74e0; }
+.map-pin.assault { background: #7c3fb0; }
+
+.map-legend {
+  position: absolute;
+  bottom: 14px;
+  left: 14px;
+  background: rgba(255,255,255,0.92);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 10px 13px;
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--slate-600);
+  box-shadow: var(--shadow-sm);
+}
+.map-legend .item { display: flex; align-items: center; gap: 6px; }
+.map-legend .swatch { width: 9px; height: 9px; border-radius: 50%; }
+
+.recent-panel { padding: 20px; max-height: 480px; overflow-y: auto; }
+.recent-item {
+  display: flex;
+  gap: 12px;
+  padding: 12px 0;
+  border-top: 1px solid var(--line);
+}
+.recent-item:first-of-type { border-top: none; padding-top: 2px; }
+.recent-item .dot-wrap { padding-top: 3px; }
+.recent-item .title { font-weight: 700; font-size: 0.85rem; }
+.recent-item .place { color: var(--slate-500); font-size: 0.76rem; margin-top: 2px; }
+.recent-item .time { color: var(--slate-400); font-size: 0.72rem; margin-top: 4px; }
+
+/* ============================================================
+   ADMIN PAGE
+   ============================================================ */
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.tab-group { display: flex; gap: 6px; background: var(--slate-100); padding: 4px; border-radius: var(--radius-sm); }
+.tab-item {
+  padding: 7px 14px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--slate-600);
+}
+.tab-item.active { background: var(--white); color: var(--blue-700); box-shadow: var(--shadow-sm); }
+
+.admin-table { width: 100%; border-collapse: collapse; }
+.admin-table th {
+  text-align: left;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--slate-500);
+  font-weight: 700;
+  padding: 0 14px 10px;
+  border-bottom: 1px solid var(--line);
+}
+.admin-table td {
+  padding: 14px;
+  border-bottom: 1px solid var(--line);
+  font-size: 0.85rem;
+  vertical-align: middle;
+}
+.admin-table tr:last-child td { border-bottom: none; }
+.admin-table td.actions { display: flex; gap: 8px; }
+.id-chip { font-family: 'SFMono-Regular', Consolas, monospace; font-size: 0.76rem; color: var(--slate-500); }
+.status-select {
+  border: 1px solid var(--slate-300);
+  border-radius: 6px;
+  padding: 6px 8px;
+  font-size: 0.78rem;
+  font-family: var(--font-body);
+  background: var(--white);
+  color: var(--navy-900);
+}
+.icon-btn-sm {
+  width: 30px; height: 30px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 6px;
+  border: 1px solid var(--slate-300);
+  background: var(--white);
+  color: var(--slate-600);
+}
+.icon-btn-sm:hover { border-color: var(--blue-500); color: var(--blue-600); }
+.icon-btn-sm svg { width: 15px; height: 15px; }
+
+/* ---------- Modal ---------- */
+.modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(11,21,38,0.5);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+  padding: 20px;
+}
+.modal-overlay.open { display: flex; }
+.modal-card {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  width: 100%;
+  max-width: 460px;
+  padding: 26px 28px;
+  box-shadow: var(--shadow-lg);
+}
+.modal-card .top-row { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; }
+.modal-card h3 { font-size: 1.05rem; }
+.modal-close { color: var(--slate-500); font-size: 1.1rem; line-height: 1; }
+.detail-row { display: flex; justify-content: space-between; padding: 9px 0; border-top: 1px solid var(--line); font-size: 0.84rem; }
+.detail-row:first-of-type { border-top: none; }
+.detail-row .k { color: var(--slate-500); }
+.detail-row .v { font-weight: 700; text-align: right; }
+.modal-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1000px) {
+  .app-shell { grid-template-columns: 1fr; }
+  .sidebar { position: relative; height: auto; flex-direction: row; align-items: center; overflow-x: auto; }
+  .sidebar .brand { padding: 4px 14px 4px 0; }
+  .nav-group { display: flex; flex: none; margin: 0; gap: 4px; }
+  .nav-label { display: none; }
+  .sidebar-foot { display: none; }
+  .main { padding: 22px 18px 50px; }
+  .stat-grid, .quick-actions { grid-template-columns: 1fr; }
+  .form-layout, .map-layout { grid-template-columns: 1fr; }
+  .field-row { grid-template-columns: 1fr; }
+  .auth-shell { grid-template-columns: 1fr; }
+  .auth-visual { display: none; }
+  .incident-row { grid-template-columns: 24px 1fr; row-gap: 4px; }
+  .incident-row > *:nth-child(3), .incident-row > *:nth-child(4), .incident-row > *:nth-child(5) { grid-column: 2; }
+}
+
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     VIEW: LOGIN
+     ============================================================ -->
+<div id="view-login" class="auth-shell">
+
+  <div class="auth-visual">
+    <div class="brand">
+      <div class="brand-mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5v6c0 5 3.4 8.7 8 10 4.6-1.3 8-5 8-10V5l-8-3Z"/><path d="M9.5 12.2 11.3 14l3.4-4"/></svg>
+      </div>
+      <div>
+        <div class="brand-name">SIM</div>
+        <div class="brand-sub">Security Incident Mapping</div>
+      </div>
+    </div>
+
+    <div class="auth-pins">
+      <div class="pin p1"></div>
+      <div class="pin p2"></div>
+      <div class="pin p3"></div>
+      <div class="pin p4"></div>
+    </div>
+
+    <div class="auth-quote">
+      Every report plotted, every response tracked — one map of campus safety.
+      <span>Built for campus security offices to log, verify, and resolve incidents in one place.</span>
+    </div>
+  </div>
+
+  <div class="auth-panel">
+    <div class="auth-card">
+      <div class="brand">
+        <div class="brand-mark" style="background:linear-gradient(155deg,#1a5cbf,#123a76);">
+          <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5v6c0 5 3.4 8.7 8 10 4.6-1.3 8-5 8-10V5l-8-3Z"/><path d="M9.5 12.2 11.3 14l3.4-4"/></svg>
+        </div>
+        <div>
+          <div class="brand-name">SIM</div>
+          <div class="brand-sub">Security Incident Mapping</div>
+        </div>
+      </div>
+
+      <h1>Welcome back</h1>
+      <p class="lead">Sign in with your university credentials to continue.</p>
+
+      <form onsubmit="event.preventDefault(); enterApp();">
+        <div class="field">
+          <label for="email">Email address</label>
+          <input type="email" id="email" placeholder="you@university.edu" required>
+        </div>
+        <div class="field">
+          <label for="password">Password</label>
+          <input type="password" id="password" placeholder="••••••••" required>
+        </div>
+
+        <div class="row-between">
+          <label class="checkbox-line"><input type="checkbox" style="width:auto;"> Remember me</label>
+          <a href="#" class="link">Forgot password?</a>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block">Log in</button>
+      </form>
+
+      <p class="auth-footnote">Prototype build for academic demonstration only — no live authentication.</p>
+    </div>
+  </div>
+</div>
+
+
+<!-- ============================================================
+     VIEW: APP SHELL (dashboard / report / map / admin)
+     ============================================================ -->
+<div id="view-app" class="app-shell" style="display:none;">
+
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5v6c0 5 3.4 8.7 8 10 4.6-1.3 8-5 8-10V5l-8-3Z"/><path d="M9.5 12.2 11.3 14l3.4-4"/></svg>
+      </div>
+      <div><div class="brand-name">SIM</div><div class="brand-sub">Incident Mapping</div></div>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-label">Menu</div>
+      <a class="nav-item" id="nav-dashboard" href="#" onclick="showView('dashboard'); return false;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
+        Dashboard
+      </a>
+      <a class="nav-item" id="nav-report" href="#" onclick="showView('report'); return false;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+        Report Incident
+      </a>
+      <a class="nav-item" id="nav-map" href="#" onclick="showView('map'); return false;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 20 3 17V4l6 3m0 13 6-3m-6 3V7m6 10 6 3V7l-6-3m0 13V4m0 3-6-3"/></svg>
+        Incident Map
+      </a>
+      <a class="nav-item" id="nav-admin" href="#" onclick="showView('admin'); return false;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg>
+        Admin
+      </a>
+    </div>
+
+    <div class="sidebar-foot">
+      <div class="avatar">JD</div>
+      <div class="who">
+        <div class="name">Jordan Diaz</div>
+        <div class="role">Security Officer</div>
+      </div>
+      <a class="icon-btn" href="#" onclick="exitApp(); return false;" title="Log out">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>
+      </a>
+    </div>
+  </aside>
+
+  <main class="main">
+
+    <!-- ---------- PANEL: DASHBOARD ---------- -->
+    <section id="panel-dashboard" class="panel">
+      <div class="topbar">
+        <div>
+          <div class="eyebrow">Overview</div>
+          <h1>Welcome back, Jordan 👋</h1>
+          <p class="meta">Here's what's happening across campus today, Jul 9.</p>
+        </div>
+        <a href="#" class="btn btn-primary" onclick="showView('report'); return false;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><path d="M12 5v14M5 12h14"/></svg>
+          Report Incident
+        </a>
+      </div>
+
+      <div class="stat-grid">
+        <div class="stat-card stat-total">
+          <div class="icon-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg></div>
+          <div class="num">128</div>
+          <div class="label">Total Incidents</div>
+          <div class="delta up">↑ 6 new this week</div>
+        </div>
+        <div class="stat-card stat-pending">
+          <div class="icon-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
+          <div class="num">17</div>
+          <div class="label">Pending Incidents</div>
+          <div class="delta flat">Awaiting review</div>
+        </div>
+        <div class="stat-card stat-resolved">
+          <div class="icon-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
+          <div class="num">111</div>
+          <div class="label">Resolved Incidents</div>
+          <div class="delta down">86% resolution rate</div>
+        </div>
+      </div>
+
+      <div class="section-title">Quick actions</div>
+      <div class="quick-actions">
+        <a class="action-card" href="#" onclick="showView('report'); return false;">
+          <div class="icon-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg></div>
+          <h3>Report Incident</h3>
+          <p>Log a new security incident with category, location, and evidence.</p>
+          <span class="go">Open form →</span>
+        </a>
+        <a class="action-card" href="#" onclick="showView('map'); return false;">
+          <div class="icon-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 20 3 17V4l6 3m0 13 6-3m-6 3V7m6 10 6 3V7l-6-3m0 13V4m0 3-6-3"/></svg></div>
+          <h3>View Map</h3>
+          <p>See where incidents are happening across campus in real time.</p>
+          <span class="go">Open map →</span>
+        </a>
+        <a class="action-card" href="#" onclick="showView('admin'); return false;">
+          <div class="icon-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg></div>
+          <h3>Admin</h3>
+          <p>Review, verify, and update the status of reported incidents.</p>
+          <span class="go">Open panel →</span>
+        </a>
+      </div>
+
+      <div class="section-title">Recent incidents</div>
+      <div class="card list-card">
+        <div class="incident-row head">
+          <span></span><span>Incident</span><span>Location</span><span>Category</span><span>Status</span>
+        </div>
+        <div class="incident-row">
+          <span class="cat-dot dot-theft"></span>
+          <div><div class="incident-title">Laptop theft</div><div class="incident-sub">Reported 42 min ago</div></div>
+          <span>Library, 2nd Floor</span>
+          <span>Theft</span>
+          <span class="badge badge-pending">Pending</span>
+        </div>
+        <div class="incident-row">
+          <span class="cat-dot dot-fire"></span>
+          <div><div class="incident-title">Kitchen fire alarm</div><div class="incident-sub">Reported 3 hr ago</div></div>
+          <span>Dorm C, Block 2</span>
+          <span>Fire</span>
+          <span class="badge badge-progress">In Progress</span>
+        </div>
+        <div class="incident-row">
+          <span class="cat-dot dot-accident"></span>
+          <div><div class="incident-title">Scooter collision</div><div class="incident-sub">Reported yesterday</div></div>
+          <span>Main Gate Road</span>
+          <span>Accident</span>
+          <span class="badge badge-resolved">Resolved</span>
+        </div>
+        <div class="incident-row">
+          <span class="cat-dot dot-assault"></span>
+          <div><div class="incident-title">Altercation reported</div><div class="incident-sub">Reported yesterday</div></div>
+          <span>Student Union</span>
+          <span>Assault</span>
+          <span class="badge badge-resolved">Resolved</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------- PANEL: REPORT INCIDENT ---------- -->
+    <section id="panel-report" class="panel" hidden>
+      <div class="topbar">
+        <div>
+          <div class="eyebrow">New report</div>
+          <h1>Report an incident</h1>
+          <p class="meta">Provide as much detail as possible to help responders act quickly.</p>
+        </div>
+      </div>
+
+      <div class="form-layout">
+        <form class="card form-card" onsubmit="event.preventDefault(); document.getElementById('confirm').classList.add('open');">
+
+          <div class="field">
+            <label for="title">Incident title</label>
+            <input type="text" id="title" placeholder="e.g. Laptop stolen from Library reading room" required>
+          </div>
+
+          <div class="field">
+            <label>Incident category</label>
+            <div class="category-grid">
+              <label class="category-option">
+                <input type="radio" name="category" value="theft" checked>
+                <span class="card-face">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a4 4 0 0 1 8 0v2"/></svg>
+                  Theft
+                </span>
+              </label>
+              <label class="category-option">
+                <input type="radio" name="category" value="robbery">
+                <span class="card-face">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5v6c0 5 3.4 8.7 8 10 4.6-1.3 8-5 8-10V5l-8-3Z"/></svg>
+                  Robbery
+                </span>
+              </label>
+              <label class="category-option">
+                <input type="radio" name="category" value="fire">
+                <span class="card-face">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c2 3-2 4-1 7 1-1 2-1 2-1 1 3-1 5-3 6-3 1.5-5-1-5-4 0-4 3-5 3-8 2 1 3 2 4 0Z"/></svg>
+                  Fire
+                </span>
+              </label>
+              <label class="category-option">
+                <input type="radio" name="category" value="accident">
+                <span class="card-face">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v5l3 2"/></svg>
+                  Accident
+                </span>
+              </label>
+              <label class="category-option">
+                <input type="radio" name="category" value="assault">
+                <span class="card-face">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg>
+                  Assault
+                </span>
+              </label>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="desc">Description</label>
+            <textarea id="desc" placeholder="What happened? Include any details that could help investigators, such as time, people involved, or items lost." required></textarea>
+          </div>
+
+          <div class="field">
+            <label for="loc">Location</label>
+            <input type="text" id="loc" placeholder="e.g. Library, 2nd Floor — near study pods" required>
+          </div>
+
+          <div class="field">
+            <label>Upload image <span style="font-weight:400; color:var(--slate-500);">(optional)</span></label>
+            <label class="upload-box" for="file-input">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4m0 0 4 4m-4-4-4 4"/><path d="M4 16v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></svg>
+              <div><strong>Click to upload</strong> or drag and drop a photo</div>
+              <div class="hint">PNG or JPG, up to 10MB</div>
+            </label>
+            <input type="file" id="file-input" accept="image/*" style="display:none;">
+          </div>
+
+          <div class="form-actions">
+            <button type="button" class="btn btn-secondary">Save as draft</button>
+            <button type="submit" class="btn btn-primary">Submit report</button>
+          </div>
+        </form>
+
+        <aside class="card tip-card">
+          <h3>Reporting tips</h3>
+          <ul class="tip-list">
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+              Choose the category that best matches what occurred — this routes your report to the right response team.
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+              Be as specific as possible with the location — building, floor, and nearby landmark.
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+              A photo helps responders verify and assess the scene faster.
+            </li>
+          </ul>
+          <div class="divider"></div>
+          <div class="emergency-box">
+            <strong>In an active emergency</strong>
+            Call campus security directly at 1717 or dial 911 before submitting a report.
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ---------- PANEL: INCIDENT MAP ---------- -->
+    <section id="panel-map" class="panel" hidden>
+      <div class="topbar">
+        <div>
+          <div class="eyebrow">Live view</div>
+          <h1>Incident map</h1>
+          <p class="meta">Geographic view of all reported incidents across campus.</p>
+        </div>
+      </div>
+
+      <div class="search-bar">
+        <div class="search-input">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+          <input type="text" placeholder="Search by location, title, or reporter…">
+        </div>
+        <select class="filter-select">
+          <option>All categories</option>
+          <option>Theft</option>
+          <option>Robbery</option>
+          <option>Fire</option>
+          <option>Accident</option>
+          <option>Assault</option>
+        </select>
+        <select class="filter-select">
+          <option>Last 30 days</option>
+          <option>Last 7 days</option>
+          <option>Today</option>
+        </select>
+      </div>
+
+      <div class="map-layout">
+        <div class="map-canvas">
+          <div class="map-block" style="top:8%; left:6%; width:22%; height:16%;"></div>
+          <div class="map-block" style="top:8%; left:32%; width:16%; height:10%;"></div>
+          <div class="map-block" style="top:58%; left:10%; width:26%; height:30%;"></div>
+          <div class="map-block" style="top:20%; left:64%; width:28%; height:22%;"></div>
+          <div class="map-block" style="top:60%; left:56%; width:18%; height:26%;"></div>
+          <div class="map-road" style="top:0; left:48%; width:6px; height:100%;"></div>
+          <div class="map-road" style="top:45%; left:0; width:100%; height:6px;"></div>
+
+          <div class="map-label" style="top:6%; left:8%;">Library</div>
+          <div class="map-label" style="top:56%; left:12%;">Dorm Block C</div>
+          <div class="map-label" style="top:18%; left:66%;">Student Union</div>
+          <div class="map-label" style="top:58%; left:58%;">Main Gate</div>
+
+          <div class="map-pin theft" style="top:20%; left:16%;" title="Laptop theft — Library"></div>
+          <div class="map-pin fire" style="top:64%; left:22%;" title="Kitchen fire alarm — Dorm C"></div>
+          <div class="map-pin accident" style="top:64%; left:60%;" title="Scooter collision — Main Gate Road"></div>
+          <div class="map-pin assault" style="top:28%; left:74%;" title="Altercation — Student Union"></div>
+          <div class="map-pin robbery" style="top:40%; left:40%;" title="Bike stolen — Parking Lot B"></div>
+
+          <div class="map-legend">
+            <div class="item"><span class="swatch" style="background:#b8790a;"></span>Theft</div>
+            <div class="item"><span class="swatch" style="background:#b8302f;"></span>Robbery</div>
+            <div class="item"><span class="swatch" style="background:#d9531e;"></span>Fire</div>
+            <div class="item"><span class="swatch" style="background:#2f74e0;"></span>Accident</div>
+            <div class="item"><span class="swatch" style="background:#7c3fb0;"></span>Assault</div>
+          </div>
+        </div>
+
+        <aside class="card recent-panel">
+          <h3 style="font-size:0.95rem; margin-bottom:10px;">Recent incidents</h3>
+
+          <div class="recent-item">
+            <div class="dot-wrap"><span class="cat-dot dot-theft"></span></div>
+            <div>
+              <div class="title">Laptop theft</div>
+              <div class="place">Library, 2nd Floor</div>
+              <div class="time">42 min ago · Pending</div>
+            </div>
+          </div>
+          <div class="recent-item">
+            <div class="dot-wrap"><span class="cat-dot dot-fire"></span></div>
+            <div>
+              <div class="title">Kitchen fire alarm</div>
+              <div class="place">Dorm C, Block 2</div>
+              <div class="time">3 hr ago · In Progress</div>
+            </div>
+          </div>
+          <div class="recent-item">
+            <div class="dot-wrap"><span class="cat-dot dot-robbery"></span></div>
+            <div>
+              <div class="title">Bike stolen</div>
+              <div class="place">Parking Lot B</div>
+              <div class="time">5 hr ago · Pending</div>
+            </div>
+          </div>
+          <div class="recent-item">
+            <div class="dot-wrap"><span class="cat-dot dot-accident"></span></div>
+            <div>
+              <div class="title">Scooter collision</div>
+              <div class="place">Main Gate Road</div>
+              <div class="time">Yesterday · Resolved</div>
+            </div>
+          </div>
+          <div class="recent-item">
+            <div class="dot-wrap"><span class="cat-dot dot-assault"></span></div>
+            <div>
+              <div class="title">Altercation reported</div>
+              <div class="place">Student Union</div>
+              <div class="time">Yesterday · Resolved</div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ---------- PANEL: ADMIN ---------- -->
+    <section id="panel-admin" class="panel" hidden>
+      <div class="topbar">
+        <div>
+          <div class="eyebrow">Administration</div>
+          <h1>Admin dashboard</h1>
+          <p class="meta">Review, verify, and manage the status of all reported incidents.</p>
+        </div>
+        <a href="#" class="btn btn-danger-outline" onclick="exitApp(); return false;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>
+          Logout
+        </a>
+      </div>
+
+      <div class="toolbar">
+        <div class="tab-group">
+          <span class="tab-item active">All (128)</span>
+          <span class="tab-item">Pending (17)</span>
+          <span class="tab-item">In Progress (9)</span>
+          <span class="tab-item">Resolved (111)</span>
+        </div>
+        <div class="search-input" style="width:260px;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+          <input type="text" placeholder="Search incidents…">
+        </div>
+      </div>
+
+      <div class="card" style="padding: 8px 22px 20px; overflow-x:auto;">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Incident</th>
+              <th>Category</th>
+              <th>Location</th>
+              <th>Reported</th>
+              <th>Verified</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="id-chip">#SIM-1042</td>
+              <td><strong>Laptop theft</strong></td>
+              <td><span class="cat-dot dot-theft" style="display:inline-block; margin-right:6px;"></span>Theft</td>
+              <td>Library, 2nd Floor</td>
+              <td>42 min ago</td>
+              <td><span class="badge badge-pending">Unverified</span></td>
+              <td>
+                <select class="status-select">
+                  <option>Pending</option>
+                  <option>In Progress</option>
+                  <option>Resolved</option>
+                </select>
+              </td>
+              <td class="actions">
+                <button class="icon-btn-sm" title="View details" onclick="document.getElementById('detail-modal').classList.add('open');">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+                </button>
+                <button class="icon-btn-sm" title="Verify incident">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td class="id-chip">#SIM-1041</td>
+              <td><strong>Kitchen fire alarm</strong></td>
+              <td><span class="cat-dot dot-fire" style="display:inline-block; margin-right:6px;"></span>Fire</td>
+              <td>Dorm C, Block 2</td>
+              <td>3 hr ago</td>
+              <td><span class="badge badge-verified">Verified</span></td>
+              <td>
+                <select class="status-select">
+                  <option>Pending</option>
+                  <option selected>In Progress</option>
+                  <option>Resolved</option>
+                </select>
+              </td>
+              <td class="actions">
+                <button class="icon-btn-sm" title="View details" onclick="document.getElementById('detail-modal').classList.add('open');">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+                </button>
+                <button class="icon-btn-sm" title="Verify incident">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td class="id-chip">#SIM-1039</td>
+              <td><strong>Bike stolen</strong></td>
+              <td><span class="cat-dot dot-robbery" style="display:inline-block; margin-right:6px;"></span>Robbery</td>
+              <td>Parking Lot B</td>
+              <td>5 hr ago</td>
+              <td><span class="badge badge-pending">Unverified</span></td>
+              <td>
+                <select class="status-select">
+                  <option selected>Pending</option>
+                  <option>In Progress</option>
+                  <option>Resolved</option>
+                </select>
+              </td>
+              <td class="actions">
+                <button class="icon-btn-sm" title="View details" onclick="document.getElementById('detail-modal').classList.add('open');">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+                </button>
+                <button class="icon-btn-sm" title="Verify incident">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td class="id-chip">#SIM-1035</td>
+              <td><strong>Scooter collision</strong></td>
+              <td><span class="cat-dot dot-accident" style="display:inline-block; margin-right:6px;"></span>Accident</td>
+              <td>Main Gate Road</td>
+              <td>Yesterday</td>
+              <td><span class="badge badge-verified">Verified</span></td>
+              <td>
+                <select class="status-select">
+                  <option>Pending</option>
+                  <option>In Progress</option>
+                  <option selected>Resolved</option>
+                </select>
+              </td>
+              <td class="actions">
+                <button class="icon-btn-sm" title="View details" onclick="document.getElementById('detail-modal').classList.add('open');">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+                </button>
+                <button class="icon-btn-sm" title="Verify incident">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td class="id-chip">#SIM-1031</td>
+              <td><strong>Altercation reported</strong></td>
+              <td><span class="cat-dot dot-assault" style="display:inline-block; margin-right:6px;"></span>Assault</td>
+              <td>Student Union</td>
+              <td>Yesterday</td>
+              <td><span class="badge badge-verified">Verified</span></td>
+              <td>
+                <select class="status-select">
+                  <option>Pending</option>
+                  <option>In Progress</option>
+                  <option selected>Resolved</option>
+                </select>
+              </td>
+              <td class="actions">
+                <button class="icon-btn-sm" title="View details" onclick="document.getElementById('detail-modal').classList.add('open');">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+                </button>
+                <button class="icon-btn-sm" title="Verify incident">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- ============================================================
+     MODALS (shared, sit above both views)
+     ============================================================ -->
+<div class="modal-overlay" id="confirm">
+  <div class="modal-card">
+    <div class="top-row">
+      <h3>Report submitted</h3>
+      <span class="modal-close" onclick="document.getElementById('confirm').classList.remove('open');">✕</span>
+    </div>
+    <p style="font-size:0.88rem; color:var(--slate-600); line-height:1.5;">Your incident report has been logged and marked as <strong>Pending</strong>. Campus security will review it shortly.</p>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" onclick="document.getElementById('confirm').classList.remove('open'); showView('dashboard');">Back to dashboard</button>
+      <button class="btn btn-primary" onclick="document.getElementById('confirm').classList.remove('open'); showView('map');">View on map</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="detail-modal">
+  <div class="modal-card">
+    <div class="top-row">
+      <h3>Laptop theft — #SIM-1042</h3>
+      <span class="modal-close" onclick="document.getElementById('detail-modal').classList.remove('open');">✕</span>
+    </div>
+    <div class="detail-row"><span class="k">Category</span><span class="v">Theft</span></div>
+    <div class="detail-row"><span class="k">Location</span><span class="v">Library, 2nd Floor</span></div>
+    <div class="detail-row"><span class="k">Reported by</span><span class="v">Anonymous student</span></div>
+    <div class="detail-row"><span class="k">Reported</span><span class="v">42 minutes ago</span></div>
+    <div class="detail-row"><span class="k">Description</span><span class="v" style="text-align:right; max-width:230px;">Laptop left unattended at study pod was taken between 2:10–2:30 PM.</span></div>
+    <div class="detail-row"><span class="k">Status</span><span class="v"><span class="badge badge-pending">Pending</span></span></div>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" onclick="document.getElementById('detail-modal').classList.remove('open');">Close</button>
+      <button class="btn btn-primary">Verify incident</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  function enterApp() {
+    document.getElementById('view-login').style.display = 'none';
+    document.getElementById('view-app').style.display = 'grid';
+    showView('dashboard');
+  }
+
+  function exitApp() {
+    document.getElementById('view-app').style.display = 'none';
+    document.getElementById('view-login').style.display = 'grid';
+    document.getElementById('confirm').classList.remove('open');
+    document.getElementById('detail-modal').classList.remove('open');
+  }
+
+  function showView(name) {
+    document.querySelectorAll('.panel').forEach(function (p) { p.hidden = true; });
+    document.getElementById('panel-' + name).hidden = false;
+
+    document.querySelectorAll('.nav-item').forEach(function (n) { n.classList.remove('active'); });
+    document.getElementById('nav-' + name).classList.add('active');
+
+    document.querySelector('.main').scrollTo({ top: 0, behavior: 'instant' });
+  }
+</script>
+</body>
+</html>
